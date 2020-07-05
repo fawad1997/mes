@@ -2,6 +2,7 @@ package com.wulf.systems.mes.controller;
 
 import com.wulf.systems.mes.entity.Order;
 import com.wulf.systems.mes.service.OrderService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,8 @@ public class OrderController {
     public List<Order> getOrders() {
         return orderService.getOrders();
     }
-
+    //If you want to add more info about api
+    //@ApiOperation(value = "Find Order by id",notes = "search by id in db",response = Order.class)
     @GetMapping(value = "/{id}")
     public Order getOrder(@PathVariable int id) {
         return orderService.getOrder(id);
