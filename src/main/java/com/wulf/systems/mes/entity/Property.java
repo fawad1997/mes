@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
@@ -18,6 +19,9 @@ public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("ID")
+    @Column(name = "property_id")
     private int id;
     private String value;
+    @ManyToMany(mappedBy = "properties")
+    private Set<Attribute> attributes;
 }
