@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,21 +14,24 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name = "mes_workstation")
-public class Workstation {
+@Table(name = "mes_order_product_attribute_value")
+public class OrderProductAttributeValue {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("ID")
-    private int id;
-    private String name;
+    private int orderProductAttributeId;
+
+    @JsonProperty("Value")
+    private String value;
 
     @OneToMany(
             targetEntity = OrderProduct.class,
-            mappedBy = "workstation",
+            mappedBy = "orderProductAttribute",
             fetch = FetchType.EAGER
     )
-    private List<OrderProduct> orderProducts = new ArrayList<>();
+    private List<OrderProduct> orderProducts;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private WorkstationConfiguration workstationConfiguration;
+    private ProductAttribute productAttribute;
 }

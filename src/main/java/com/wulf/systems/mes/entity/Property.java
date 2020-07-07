@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Data
@@ -22,6 +21,7 @@ public class Property {
     @Column(name = "property_id")
     private int id;
     private String value;
-    @ManyToMany(mappedBy = "properties")
-    private Set<Attribute> attributes;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Attribute attribute;
 }

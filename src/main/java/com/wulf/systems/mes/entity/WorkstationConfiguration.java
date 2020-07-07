@@ -15,21 +15,22 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name = "mes_workstation")
-public class Workstation {
+@Table(name = "mes_workstation_configuration")
+public class WorkstationConfiguration {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("ID")
-    private int id;
-    private String name;
+    private int workstationConfigurationId;
 
-    @OneToMany(
-            targetEntity = OrderProduct.class,
-            mappedBy = "workstation",
-            fetch = FetchType.EAGER
-    )
-    private List<OrderProduct> orderProducts = new ArrayList<>();
+    @JsonProperty("Permission")
+    private String permission;
+
+    @OneToMany(targetEntity = Workstation.class,
+    mappedBy = "workstationConfiguration",
+    fetch = FetchType.EAGER)
+    private List<Workstation> workstations = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private WorkstationConfiguration workstationConfiguration;
+    private ProductAttribute productAttribute;
 }

@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,6 +17,10 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 @Table(name = "mes_attribute")
+@org.hibernate.annotations.Cache(
+        usage = CacheConcurrencyStrategy.READ_WRITE
+)
+
 public class Attribute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +30,28 @@ public class Attribute {
     private String name;
     @JsonProperty("Attribute_Type")
     private String attributeType;
-    @ManyToMany
-    @JoinTable(
-            name = "mes_attribute_property",
-            joinColumns = @JoinColumn(name = "attribute_id"),
-            inverseJoinColumns = @JoinColumn(name = "property_id"))
-    private Set<Property> properties;
+
+    @OneToMany(
+            mappedBy = "attribute",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<ProductAttribute> products = new ArrayList<>();
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JoinColumn(name = "attribute")
+    private List<Property> properties = new ArrayList<>();
+
+    public void addProperty(Property property) {
+        properties.add(property);
+        property.setAttribute(this);
+    }
+
+    public void removeProperty(Property property) {
+        properties.remove(property);
+        property.setAttribute(null);
+    }
 }
