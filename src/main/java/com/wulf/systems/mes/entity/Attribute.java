@@ -42,7 +42,7 @@ public class Attribute {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JoinColumn(name = "attribute")
+    @JoinColumn(name = "attribute_id")
     private List<Property> properties = new ArrayList<>();
 
     public void addProperty(Property property) {

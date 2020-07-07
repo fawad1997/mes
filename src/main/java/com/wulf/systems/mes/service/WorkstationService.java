@@ -20,10 +20,10 @@ public class WorkstationService {
 
     public Workstation findById(int id) {
         Optional<Workstation> workstation = workstationRepository.findById(id);
-        if(workstation.isPresent()){
-            return  workstation.get();
-        }else
-            throw new GenericIdException("Workstation with id "+id+" does not exists");
+        if (workstation.isPresent()) {
+            return workstation.get();
+        } else
+            throw new GenericIdException("Workstation with id " + id + " does not exists");
     }
 
     public Workstation addOrUpdate(Workstation workstation) {
@@ -33,9 +33,9 @@ public class WorkstationService {
 
     public void deleteById(int id) {
         Optional<Workstation> workstation = workstationRepository.findById(id);
-        if(workstation.isPresent()){
+        if (workstation.isPresent()) {
             workstationRepository.delete(workstation.get());
-        }else
-            throw new GenericIdException("WorkStation with id "+id+" does not exists");
+        } else
+            throw new GenericIdException("WorkStation with id " + id + " does not exists");
     }
 }

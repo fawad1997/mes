@@ -18,8 +18,7 @@ public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("ID")
-    @Column(name = "property_id")
-    private int id;
+    private Integer id;
     private String value;
 
     @ManyToOne(fetch = FetchType.LAZY)

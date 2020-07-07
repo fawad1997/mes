@@ -19,6 +19,7 @@ public class AttributeController {
     private AttributeService attributeService;
     @Autowired
     private ValidationErrorService validationErrorService;
+
     @GetMapping
     public List<Attribute> getAttributes() {
         return attributeService.findAll();
@@ -32,15 +33,17 @@ public class AttributeController {
     @PostMapping
     public ResponseEntity<?> addAttribute(@RequestBody Attribute attribute, BindingResult result) {
         ResponseEntity errors = validationErrorService.validate(result);
-        if(errors!=null)
+        if (errors != null) {
             return errors;
+        }
+
         return new ResponseEntity<>(attributeService.addOrUpdate(attribute), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateAttribute(@PathVariable int id, @RequestBody Attribute attribute, BindingResult result) {
         ResponseEntity errors = validationErrorService.validate(result);
-        if(errors!=null)
+        if (errors != null)
             return errors;
         attribute.setId(id);
         return new ResponseEntity<>(attributeService.addOrUpdate(attribute), HttpStatus.OK);
